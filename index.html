@@ -154,20 +154,8 @@ canvas { display:block; border-radius:12px; box-shadow:0 0 60px rgba(255,68,68,.
 <!-- ══ UPLOAD SCREEN ══════════════════════════════════════ -->
 <div id="upload-screen">
   <h1>👊 SCHLAG DEN FREUND!</h1>
-  <p class="subtitle">Lade ein Foto hoch und los geht's!</p>
-
-  <div class="upload-area" id="upload-area">
-    <div class="upload-icon">📸</div>
-    <div class="upload-text">Foto hochladen</div>
-  </div>
-  <input type="file" id="file-input" accept="image/*">
-
-  <div class="name-row">
-    <label for="friend-name">Name:</label>
-    <input type="text" id="friend-name" placeholder="Freundsname" maxlength="20">
-  </div>
-
-  <button class="start-btn" id="start-btn">SPIEL STARTEN! 👊</button>
+  <p class="subtitle">Bereit für Leon? 😈</p>
+  <button class="start-btn visible" id="start-btn">SPIEL STARTEN! 👊</button>
 </div>
 
 <!-- ══ GAME SCREEN ════════════════════════════════════════ -->
@@ -1038,26 +1026,17 @@ document.getElementById('shop-btn').addEventListener('click', openShop);
 document.getElementById('shop-close-btn').addEventListener('click', closeShop);
 
 // ════════════════════════════════════════════════════════
-//  UPLOAD & START
+//  START
 // ════════════════════════════════════════════════════════
-const uploadArea = document.getElementById('upload-area');
-const fileInput  = document.getElementById('file-input');
-const startBtn   = document.getElementById('start-btn');
+const startBtn = document.getElementById('start-btn');
 
-uploadArea.addEventListener('click', ()=>fileInput.click());
-uploadArea.addEventListener('dragover', e=>{ e.preventDefault(); uploadArea.style.borderColor='#44ff88'; });
-uploadArea.addEventListener('dragleave', ()=>{ uploadArea.style.borderColor='#ff4444'; });
-uploadArea.addEventListener('drop', e=>{ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f&&f.type.startsWith('image/')) loadPhoto(f); });
-fileInput.addEventListener('change', e=>{ if(e.target.files[0]) loadPhoto(e.target.files[0]); });
-
-function loadPhoto(file) {
-  const reader=new FileReader();
-  reader.onload=e=>{ const img=new Image(); img.onload=()=>{ faceImg=img; uploadArea.innerHTML=`<img src="${e.target.result}">`; uploadArea.classList.add('has-photo'); startBtn.classList.add('visible'); }; img.src=e.target.result; };
-  reader.readAsDataURL(file);
-}
+// Bild fix vorladen
+const _leonImg = new Image();
+_leonImg.src = 'Gemini_Generated_Image_shdjodshdjodshdj.png';
+_leonImg.onload = () => { faceImg = _leonImg; };
 
 startBtn.addEventListener('click', ()=>{
-  friendName=document.getElementById('friend-name').value.trim()||'Freund';
+  friendName = 'Leon';
   document.getElementById('upload-screen').style.display='none';
   document.getElementById('game-screen').style.display='block';
   requestAnimationFrame(loop);
